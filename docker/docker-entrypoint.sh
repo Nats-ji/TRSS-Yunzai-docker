@@ -41,7 +41,7 @@ fi
 if [[ ! -f "$HOME/.ovo/yunzai.ok" ]]; then
     set -e
     echo -e "\n ================ \n ${Info} ${GreenBG} 更新 TRSS-Yunzai 运行依赖 ${Font} \n ================ \n"
-    pnpm install -P
+    pnpm i
     touch ~/.ovo/yunzai.ok
     set +e
 fi
@@ -321,22 +321,22 @@ fi
 
 set -e
 
-cd $WORK_DIR
+# cd $WORK_DIR
 
-echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n"
+# echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n"
 
-if [ -f "./config/config/redis.yaml" ]; then
-    sed -i 's/127.0.0.1/redis/g' ./config/config/redis.yaml
-    echo -e "\n  修改Redis地址完成~  \n"
-fi
+# if [ -f "./config/config/redis.yaml" ]; then
+#     sed -i 's/127.0.0.1/redis/g' ./config/config/redis.yaml
+#     echo -e "\n  修改Redis地址完成~  \n"
+# fi
 
-echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
+# echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
-set +e
-node app
-EXIT_CODE=$?
+# set +e
+# node app
+# EXIT_CODE=$?
 
-if [[ $EXIT_CODE != 0 ]]; then
-	echo -e "\n ================ \n ${Warn} ${YellowBG} 启动 TRSS-Yunzai 失败 ${Font} \n ================ \n"
-	tail -f /dev/null
-fi
+# if [[ $EXIT_CODE != 0 ]]; then
+# 	echo -e "\n ================ \n ${Warn} ${YellowBG} 启动 TRSS-Yunzai 失败 ${Font} \n ================ \n"
+# 	tail -f /dev/null
+# fi
