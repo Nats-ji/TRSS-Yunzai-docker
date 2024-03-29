@@ -1,6 +1,6 @@
 version: "3"
 services:
-  yunzai:
+  miao-yunzai:
     container_name: miao-yunzai
     build:                                                              # 使用 Dockerfile 本地构建
       context: ./docker
