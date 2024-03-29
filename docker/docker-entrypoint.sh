@@ -328,8 +328,7 @@ fi
 echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
 set +e
-exec 0<&-
-node .
+nohup node app
 EXIT_CODE=$?
 
 if [[ $EXIT_CODE != 0 ]]; then
