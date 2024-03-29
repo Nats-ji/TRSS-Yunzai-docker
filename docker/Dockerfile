@@ -91,4 +91,4 @@ COPY --from=resource /res/entrypoint.sh /app/TRSS-Yunzai/entrypoint.sh
 
 WORKDIR /app/TRSS-Yunzai
 
-ENTRYPOINT ["/app/Trss-Yunzai/entrypoint.sh"]
+ENTRYPOINT ["/app/TRSS-Yunzai/entrypoint.sh"]
