@@ -325,13 +325,13 @@ if [ -f "./config/config/redis.yaml" ]; then
     echo -e "\n  修改Redis地址完成~  \n"
 fi
 
-# echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
+echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
-# set +e
-# node .
-# EXIT_CODE=$?
+set +e
+node . < /dev/null
+EXIT_CODE=$?
 
-# if [[ $EXIT_CODE != 0 ]]; then
-# 	echo -e "\n ================ \n ${Warn} ${YellowBG} 启动 TRSS-Yunzai 失败 ${Font} \n ================ \n"
-# 	tail -f /dev/null
-# fi
+if [[ $EXIT_CODE != 0 ]]; then
+	echo -e "\n ================ \n ${Warn} ${YellowBG} 启动 TRSS-Yunzai 失败 ${Font} \n ================ \n"
+	tail -f /dev/null
+fi
