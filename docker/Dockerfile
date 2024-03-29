@@ -14,7 +14,7 @@ ARG USE_APT_MIRROR true
 ARG USE_NPM_MIRROR true
 ARG USE_PYPI_MIRROR true
 ARG REPO_URL https://github.com/TimeRainStarSky/Yunzai.git
-ARG REPO_BRANCH master
+ARG REPO_BRANCH main
 
 RUN export BUNDLE_FFMPEG=${BUNDLE_FFMPEG:-true} \
     && export BUNDLE_POETRY=${BUNDLE_POETRY:-true} \
@@ -84,8 +84,10 @@ RUN REPO_URL=${REPO_URL:-"https://github.com/TimeRainStarSky/Yunzai.git"} \
     && git clone --depth=1 --branch $REPO_BRANCH $REPO_URL /app/TRSS-Yunzai \
     && cd /app/TRSS-Yunzai \
     && sed -i 's/127.0.0.1/redis/g' ./config/default_config/redis.yaml \
-    && pnpm install -P $_NPM_MIRROR_FLAG \
-    && git remote set-url origin https://github.com/TimeRainStarSky/Yunzai.git
+    && git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin.git /app/TRSS-Yunzai/plugins/genshin \
+    && git clone --depth 1 https://github.com/yoimiya-kokomi/miao-plugin /app/TRSS-Yunzai/plugins/miao-plugin \
+    && git clone --depth 1 https://github.com/TimeRainStarSky/TRSS-Plugin /app/TRSS-Yunzai/plugins/TRSS-Plugin \
+    && pnpm install -P $_NPM_MIRROR_FLAG
 
 COPY --from=resource /res/entrypoint.sh /app/TRSS-Yunzai/entrypoint.sh
 

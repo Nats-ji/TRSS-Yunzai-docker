@@ -51,12 +51,6 @@ echo -e "\n ================ \n ${Version} ${BlueBG} TRSS-Yunzai 版本信息 ${
 git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 
 
-if [ ! -d $GENSHIN_PLUGIN_PATH"/.git" ]; then
-    echo -e "\n ${Warn} ${YellowBG} 由于TRSS-Yunzai依赖genshin-plugin，检测到目前没有安装，开始自动下载 ${Font} \n"
-    rm -rf $GENSHIN_PLUGIN_PATH
-    git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin.git $GENSHIN_PLUGIN_PATH
-fi
-
 if [ -d $GENSHIN_PLUGIN_PATH"/.git" ]; then
 
     echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 genshin-plugin 插件更新 ${Font} \n ================ \n"
