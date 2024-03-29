@@ -36,7 +36,7 @@ RUN export BUNDLE_FFMPEG=${BUNDLE_FFMPEG:-true} \
     \
     && apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y curl wget gnupg git fonts-wqy-microhei xfonts-utils chromium fontconfig libxss1 libgl1 \
+    && apt-get install -y curl wget gnupg git fonts-wqy-microhei xfonts-utils chromium fontconfig libxss1 libgl1 screen \
     && apt-get autoremove \
     && apt-get clean \
     \
