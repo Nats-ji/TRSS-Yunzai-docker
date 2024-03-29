@@ -328,7 +328,7 @@ fi
 echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
 set +e
-screen -dmS yunzai node .
+node .
 tail -f /dev/null
 EXIT_CODE=$?
 
