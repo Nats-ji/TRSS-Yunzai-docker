@@ -15,7 +15,6 @@ services:
     #   - "50831:50831"                                                 # 映射锅巴插件端口，格式"主机端口:容器内部端口"
     volumes:
       - ./yunzai/config:/app/TRSS-Yunzai/config/config                   # Bot基础配置文件
-      - ./yunzai/lagrange_plugin/Lagrange.yaml:/app/TRSS-Yunzai/config/Lagrange.yaml
       - ./yunzai/genshin_config:/app/TRSS-Yunzai/plugins/genshin/config  # 公共Cookie，云崽功能配置文件
       - ./yunzai/logs:/app/TRSS-Yunzai/logs                              # 日志文件
       - ./yunzai/data:/app/TRSS-Yunzai/data                              # 数据文件
