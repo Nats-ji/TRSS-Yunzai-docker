@@ -14,7 +14,6 @@ Warn="${YellowBG}[提示]${Font}"
 WORK_DIR="/app/TRSS-Yunzai"
 GENSHIN_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/genshin"
 MIAO_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/miao-plugin"
-LAGRANGE_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/Lagrange-Plugin"
 TRSS_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/TRSS-Plugin"
 XIAOYAO_CVS_PATH="/app/TRSS-Yunzai/plugins/xiaoyao-cvs-plugin"
 PY_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/py-plugin"
@@ -148,42 +147,6 @@ if [ -d $TRSS_PLUGIN_PATH"/.git" ]; then
     fi
 
     echo -e "\n ================ \n ${Version} ${BlueBG} trss-plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-
-if [ ! -d $LAGRANGE_PLUGIN_PATH"/.git" ]; then
-    echo -e "\n ${Warn} ${YellowBG} 由于TRSS-Yunzai依赖lagrange-plugin，检测到目前没有安装，开始自动下载 ${Font} \n"
-    git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-Lagrange-Plugin.git $LAGRANGE_PLUGIN_PATH
-fi
-
-if [ -d $LAGRANGE_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 Lagrange-Plugin 插件更新 ${Font} \n ================ \n"
-
-    cd $LAGRANGE_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin main --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin main --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/lagrange.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 Lagrange-Plugin 运行依赖 ${Font} \n ================ \n"
-        pnpm i
-        touch ~/.ovo/lagrange.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} Lagrange-Plugin 插件版本信息 ${Font} \n ================ \n"
 
     git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 
