@@ -60,7 +60,7 @@ sudo vim ./lagrange/appsettings.json
 4. Edit other configs
 ```sh
 # yunzai config location
-/var/lib/docker/volumes/trss-yunzai-docker_yunzai-config/_data/
+./yunzai/config
 
 # genshin plugin config location
 ./yunzai/genshin_config
@@ -72,4 +72,12 @@ sudo vim ./lagrange/appsettings.json
 5. Start docker compose
 ```sh
 sudo docker compose up
+```
+
+6. Backup data
+```sh
+sudo backup.sh
+
+cd ./backups
+ls
 ```
