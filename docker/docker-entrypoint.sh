@@ -18,6 +18,7 @@ TRSS_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/TRSS-Plugin"
 XIAOYAO_CVS_PATH="/app/TRSS-Yunzai/plugins/xiaoyao-cvs-plugin"
 PY_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/py-plugin"
 FanSky_Qs_PATH="/app/TRSS-Yunzai/plugins/FanSky_Qs"
+GT_MANUAL_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/GT-Manual-Plugin"
 
 if [[ ! -d "$HOME/.ovo" ]]; then
     mkdir ~/.ovo
@@ -244,6 +245,35 @@ if [ -d $XIAOYAO_CVS_PATH"/.git" ]; then
     fi
 
     echo -e "\n ================ \n ${Version} ${BlueBG} xiaoyao-cvs 插件版本信息 ${Font} \n ================ \n"
+
+    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
+fi
+
+if [ -d $GT_MANUAL_PLUGIN_PATH"/.git" ]; then
+
+    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 GT-Manual-Plugin 插件更新 ${Font} \n ================ \n"
+
+    cd $GT_MANUAL_PLUGIN_PATH
+
+    if [[ -n $(git status -s) ]]; then
+        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
+        git add .
+        git stash
+        git pull origin main --allow-unrelated-histories --rebase
+        git stash pop
+    else
+        git pull origin main --allow-unrelated-histories
+    fi
+
+    if [[ ! -f "$HOME/.ovo/xiaoyao.ok" ]]; then
+        set -e
+        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 GT-Manual-Plugin 插件运行依赖 ${Font} \n ================ \n"
+        pnpm install --filter=GT-Manual-plugin
+        touch ~/.ovo/xiaoyao.ok
+        set +e
+    fi
+
+    echo -e "\n ================ \n ${Version} ${BlueBG} GT-Manual-Plugin 插件版本信息 ${Font} \n ================ \n"
 
     git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 fi

@@ -25,7 +25,7 @@ services:
       - ./yunzai/plugins/miao-plugin:/app/TRSS-Yunzai/plugins/miao-plugin                    # 默认映射喵喵插件
       - ./yunzai/plugins/TRSS-Plugin:/app/TRSS-Yunzai/plugins/TRSS-Plugin                    # Trss插件
       - ./yunzai/plugins/FanSky_Qs:/app/TRSS-Yunzai/plugins/FanSky_Qs                        # FanSky_Qs插件
-      - ./yunzai/plugins/GT-Manual:/app/TRSS-Yunzai/plugins/GT-Manual                        # 手动验证码插件
+      - ./yunzai/plugins/GT-Manual-Plugin:/app/TRSS-Yunzai/plugins/GT-Manual-Plugin          # 手动验证码插件
       # - ./yunzai/plugins/xianxin-plugin:/app/TRSS-Yunzai/plugins/xianxin-plugin              # 闲心插件
       # - ./yunzai/plugins/xiaoyao-cvs-plugin:/app/TRSS-Yunzai/plugins/xiaoyao-cvs-plugin      # 图鉴插件
       # - ./yunzai/plugins/ws-plugin:/app/TRSS-Yunzai/plugins/ws-plugin                      # websocket插件
