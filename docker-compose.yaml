@@ -21,6 +21,7 @@ services:
       - ./yunzai/temp:/app/TRSS-Yunzai/temp                              # 临时文件
       # 以下目录是插件目录，安装完插件后需要手动添加映射（如有其他插件请自行添加）
       # 映射格式：./yunzai/plugins/<插件目录名>:/app/TRSS-Yunzai/plugins/<插件目录名>
+      - ./yunzai/plugins/dynmap-stats:/app/TRSS-Yunzai/plugins/dynmap-stats                  # Dynmap-Stats插件
       - ./yunzai/plugins/example:/app/TRSS-Yunzai/plugins/example                            # 单js插件目录
       - ./yunzai/plugins/miao-plugin:/app/TRSS-Yunzai/plugins/miao-plugin                    # 默认映射喵喵插件
       - ./yunzai/plugins/TRSS-Plugin:/app/TRSS-Yunzai/plugins/TRSS-Plugin                    # Trss插件
