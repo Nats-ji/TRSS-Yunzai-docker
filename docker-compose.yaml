@@ -61,7 +61,7 @@ services:
 
   lagrange:
     container_name: miao-lagrange
-    image: ghcr.io/konatadev/lagrange.onebot:edge
+    image: ghcr.io/lagrangedev/lagrange.onebot:edge
     restart: always
     volumes:
       - ./lagrange:/app/data
