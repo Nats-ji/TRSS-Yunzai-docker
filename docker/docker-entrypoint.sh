@@ -289,10 +289,10 @@ if [ -d $ZZZ_PLUGIN_PATH"/.git" ]; then
         echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
         git add .
         git stash
-        git pull origin master --allow-unrelated-histories --rebase
+        git pull origin main --allow-unrelated-histories --rebase
         git stash pop
     else
-        git pull origin master --allow-unrelated-histories
+        git pull origin main --allow-unrelated-histories
     fi
 
     if [[ ! -f "$HOME/.ovo/zzz.ok" ]]; then
