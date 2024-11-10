@@ -107,7 +107,7 @@ if [ -d $MIAO_PLUGIN_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/miao.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 喵喵插件 运行依赖 ${Font} \n ================ \n"
-        pnpm i
+        yes | pnpm i
         touch ~/.ovo/miao.ok
         set +e
     fi
