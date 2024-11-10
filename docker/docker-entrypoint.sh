@@ -41,7 +41,7 @@ fi
 if [[ ! -f "$HOME/.ovo/yunzai.ok" ]]; then
     set -e
     echo -e "\n ================ \n ${Info} ${GreenBG} 更新 TRSS-Yunzai 运行依赖 ${Font} \n ================ \n"
-    pnpm i
+    pnpm i -P
     touch ~/.ovo/yunzai.ok
     set +e
 fi
@@ -70,7 +70,7 @@ if [ -d $GENSHIN_PLUGIN_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/genshin.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 genshin-plugin 运行依赖 ${Font} \n ================ \n"
-        pnpm i
+        pnpm i -P
         touch ~/.ovo/genshin.ok
         set +e
     fi
@@ -107,7 +107,7 @@ if [ -d $MIAO_PLUGIN_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/miao.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 喵喵插件 运行依赖 ${Font} \n ================ \n"
-        pnpm install -P
+        pnpm i -P
         touch ~/.ovo/miao.ok
         set +e
     fi
@@ -142,7 +142,7 @@ if [ -d $TRSS_PLUGIN_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/trss.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 trss-plugin 运行依赖 ${Font} \n ================ \n"
-        pnpm i
+        pnpm i -P
         touch ~/.ovo/trss.ok
         set +e
     fi
@@ -174,11 +174,11 @@ if [ -d $PY_PLUGIN_PATH"/.git" ]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 py-plugin 运行依赖 ${Font} \n ================ \n"
         cd $WORK_DIR
-	pnpm install --filter=py-plugin
-	
-	cd $PY_PLUGIN_PATH
-	poetry run pip install -r requirements.txt
-	poetry run pip install nonebot2 nonebot-adapter-onebot
+        pnpm i --filter=py-plugin -P
+        
+        cd $PY_PLUGIN_PATH
+        poetry run pip install -r requirements.txt
+        poetry run pip install nonebot2 nonebot-adapter-onebot
         touch ~/.ovo/py.ok
         set +e
     fi
@@ -208,7 +208,7 @@ if [ -d $FanSky_Qs_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/fansky.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 FanSky_Qs 运行依赖 ${Font} \n ================ \n"
-        pnpm install
+        pnpm i -P
         touch ~/.ovo/fansky.ok
         set +e
     fi
@@ -268,7 +268,7 @@ if [ -d $ZZZ_PLUGIN_PATH"/.git" ]; then
     if [[ ! -f "$HOME/.ovo/zzz.ok" ]]; then
         set -e
         echo -e "\n ================ \n ${Info} ${GreenBG} 更新 ZZZ-Plugin 插件运行依赖 ${Font} \n ================ \n"
-
+        pnpm i -P
         touch ~/.ovo/zzz.ok
         set +e
     fi
