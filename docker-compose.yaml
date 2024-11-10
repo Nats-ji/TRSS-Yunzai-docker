@@ -64,6 +64,3 @@ services:
     restart: always
     volumes:
       - ./lagrange:/app/data
-
-volumes:
-  yunzai_configs:
