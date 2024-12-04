@@ -38,7 +38,7 @@ echo -e "\n ================ \n ${Version} ${BlueBG} TRSS-Yunzai 版本信息 ${
 git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 
 
-PLUGINS=($(find /home -mindepth 1 -maxdepth 1 -type d))
+PLUGINS=($(find $PLUGIN_DIR -mindepth 1 -maxdepth 1 -type d))
 for PLUGIN in "${PLUGINS[@]}"; do
     cd "$PLUGIN";
     PLUGIN_NAME=${PWD##*/}
