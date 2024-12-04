@@ -13,6 +13,7 @@ ARG BUNDLE_POETRY true
 ARG USE_APT_MIRROR true
 ARG USE_NPM_MIRROR true
 ARG USE_PYPI_MIRROR true
+ARG INSTALL_GUOBA true
 ARG REPO_URL https://github.com/TimeRainStarSky/Yunzai.git
 ARG REPO_BRANCH main
 
@@ -85,9 +86,12 @@ RUN REPO_URL=${REPO_URL:-"https://github.com/TimeRainStarSky/Yunzai.git"} \
     && cd /app/TRSS-Yunzai \
     && sed -i 's/127.0.0.1/redis/g' ./config/default_config/redis.yaml \
     && git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin.git /app/TRSS-Yunzai/plugins/genshin \
-    && git clone --depth 1 https://github.com/yoimiya-kokomi/miao-plugin /app/TRSS-Yunzai/plugins/miao-plugin \
-    && git clone --depth 1 https://github.com/TimeRainStarSky/TRSS-Plugin /app/TRSS-Yunzai/plugins/TRSS-Plugin \
-    && pnpm install -P $_NPM_MIRROR_FLAG
+    && git clone --depth=1 https://github.com/yoimiya-kokomi/miao-plugin /app/TRSS-Yunzai/plugins/miao-plugin \
+    && git clone --depth=1 https://github.com/TimeRainStarSky/TRSS-Plugin /app/TRSS-Yunzai/plugins/TRSS-Plugin \
+    && if [ "$INSTALL_GUOBA"x = "true"x ]; then git clone --depth=1 https://github.com/guoba-yunzai/guoba-plugin.git /app/TRSS-Yunzai/plugins/Guoba-Plugin/; fi \
+    && pnpm install $_NPM_MIRROR_FLAG \
+    && ln -s /app/TRSS-Yunzai/plugins/genshin/config /app/TRSS-Yunzai/config/genshin_config \
+    && ln -s /app/TRSS-Yunzai/plugins/miao-plugin/config /app/TRSS-Yunzai/config/miao_config
 
 COPY --from=resource /res/entrypoint.sh /app/TRSS-Yunzai/entrypoint.sh
 

@@ -12,17 +12,7 @@ Info="${GreenBG}[信息]${Font}"
 Warn="${YellowBG}[提示]${Font}"
 
 WORK_DIR="/app/TRSS-Yunzai"
-GENSHIN_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/genshin"
-MIAO_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/miao-plugin"
-TRSS_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/TRSS-Plugin"
-XIAOYAO_CVS_PATH="/app/TRSS-Yunzai/plugins/xiaoyao-cvs-plugin"
-PY_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/py-plugin"
-FanSky_Qs_PATH="/app/TRSS-Yunzai/plugins/FanSky_Qs"
-ZZZ_PLUGIN_PATH="/app/TRSS-Yunzai/plugins/ZZZ-Plugin"
-
-if [[ ! -d "$HOME/.ovo" ]]; then
-    mkdir ~/.ovo
-fi
+PLUGIN_DIR="/app/TRSS-Yunzai/plugins"
 
 echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 TRSS-Yunzai 更新 ${Font} \n ================ \n"
 
@@ -32,284 +22,52 @@ if [[ -z $(git status -s) ]]; then
     echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
     git add .
     git stash
-    git pull origin main --allow-unrelated-histories --rebase
+    git pull --allow-unrelated-histories --rebase
     git stash pop
 else
-    git pull origin main --allow-unrelated-histories
+    git pull --allow-unrelated-histories
 fi
 
-if [[ ! -f "$HOME/.ovo/yunzai.ok" ]]; then
-    set -e
-    echo -e "\n ================ \n ${Info} ${GreenBG} 更新 TRSS-Yunzai 运行依赖 ${Font} \n ================ \n"
-    pnpm i -P
-    touch ~/.ovo/yunzai.ok
-    set +e
-fi
+set -e
+echo -e "\n ================ \n ${Info} ${GreenBG} 更新 TRSS-Yunzai 运行依赖 ${Font} \n ================ \n"
+pnpm i
+set +e
 
 echo -e "\n ================ \n ${Version} ${BlueBG} TRSS-Yunzai 版本信息 ${Font} \n ================ \n"
 
 git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 
 
-if [ -d $GENSHIN_PLUGIN_PATH"/.git" ]; then
+PLUGINS=($(find /home -mindepth 1 -maxdepth 1 -type d))
+for PLUGIN in "${PLUGINS[@]}"; do
+    cd "$PLUGIN";
+    PLUGIN_NAME = ${PWD##*/}
 
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 genshin-plugin 插件更新 ${Font} \n ================ \n"
+    if [ -d .git ]; then
+        echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 $PLUGIN_NAME 更新 ${Font} \n ================ \n"
 
-    cd $GENSHIN_PLUGIN_PATH
+        if [[ -z $(git status -s) ]]; then
+            echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
+            git add .
+            git stash
+            git pull --allow-unrelated-histories --rebase
+            git stash pop
+        else
+            git pull --allow-unrelated-histories
+        fi
 
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin main --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin main --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/genshin.ok" ]]; then
         set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 genshin-plugin 运行依赖 ${Font} \n ================ \n"
-        pnpm i -P
-        touch ~/.ovo/genshin.ok
+        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 $PLUGIN_NAME 运行依赖 ${Font} \n ================ \n"
+        cd "$WORK_DIR"
+        yes | pnpm i --filter=$PLUGIN_NAME
+        cd "$PLUGIN"
         set +e
+
+        echo -e "\n ================ \n ${Version} ${BlueBG} $PLUGIN_NAME 版本信息 ${Font} \n ================ \n"
+
+        git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
     fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} genshin-plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-
-if [ ! -d $MIAO_PLUGIN_PATH"/.git" ]; then
-    echo -e "\n ${Warn} ${YellowBG} 由于TRSS-Yunzai依赖miao-plugin，检测到目前没有安装，开始自动下载 ${Font} \n"
-    git clone --depth=1 https://github.com/yoimiya-kokomi/miao-plugin.git $MIAO_PLUGIN_PATH
-fi
-
-
-if [ -d $MIAO_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 喵喵插件 更新 ${Font} \n ================ \n"
-
-    cd $MIAO_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin master --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin master --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/miao.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 喵喵插件 运行依赖 ${Font} \n ================ \n"
-        yes | pnpm i
-        touch ~/.ovo/miao.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} 喵喵插件版本信息 ${Font} \n ================ \n"
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-
-if [ ! -d $TRSS_PLUGIN_PATH"/.git" ]; then
-    echo -e "\n ${Warn} ${YellowBG} 由于TRSS-Yunzai依赖trss-plugin，检测到目前没有安装，开始自动下载 ${Font} \n"
-    git clone --depth=1 https://github.com/TimeRainStarSky/TRSS-Plugin.git $TRSS_PLUGIN_PATH
-fi
-
-if [ -d $TRSS_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 trss-plugin 插件更新 ${Font} \n ================ \n"
-
-    cd $TRSS_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin main --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin main --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/trss.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 trss-plugin 运行依赖 ${Font} \n ================ \n"
-        pnpm i -P
-        touch ~/.ovo/trss.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} trss-plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-
-if [ -d $PY_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 py-plugin 插件更新 ${Font} \n ================ \n"
-
-    cd $PY_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin v3 --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin v3 --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/py.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 py-plugin 运行依赖 ${Font} \n ================ \n"
-        cd $WORK_DIR
-        pnpm i --filter=py-plugin -P
-        
-        cd $PY_PLUGIN_PATH
-        poetry run pip install -r requirements.txt
-        poetry run pip install nonebot2 nonebot-adapter-onebot
-        touch ~/.ovo/py.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} py-plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-if [ -d $FanSky_Qs_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 FanSky_Qs 插件更新 ${Font} \n ================ \n"
-
-    cd $FanSky_Qs_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin main --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin main --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/fansky.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 FanSky_Qs 运行依赖 ${Font} \n ================ \n"
-        pnpm i -P
-        touch ~/.ovo/fansky.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} FanSky_Qs 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-
-fi
-
-
-if [ -d $XIAOYAO_CVS_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 xiaoyao-cvs 插件更新 ${Font} \n ================ \n"
-
-    cd $XIAOYAO_CVS_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin master --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin master --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/xiaoyao.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 xiaoyao-cvs 插件运行依赖 ${Font} \n ================ \n"
-#        pnpm add promise-retry superagent -w
-        touch ~/.ovo/xiaoyao.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} xiaoyao-cvs 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-fi
-
-if [ -d $ZZZ_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 ZZZ-Plugin 插件更新 ${Font} \n ================ \n"
-
-    cd $ZZZ_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin main --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin main --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/zzz.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 ZZZ-Plugin 插件运行依赖 ${Font} \n ================ \n"
-        pnpm i -P
-        touch ~/.ovo/zzz.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} ZZZ-Plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-fi
-
-if [ -d $GUOBA_PLUGIN_PATH"/.git" ]; then
-
-    echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 Guoba-Plugin 插件更新 ${Font} \n ================ \n"
-
-    cd $GUOBA_PLUGIN_PATH
-
-    if [[ -n $(git status -s) ]]; then
-        echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
-        git add .
-        git stash
-        git pull origin master --allow-unrelated-histories --rebase
-        git stash pop
-    else
-        git pull origin master --allow-unrelated-histories
-    fi
-
-    if [[ ! -f "$HOME/.ovo/guoba.ok" ]]; then
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 Guoba-Plugin 插件运行依赖 ${Font} \n ================ \n"
-        pnpm add multer body-parser jsonwebtoken -w
-        touch ~/.ovo/guoba.ok
-        set +e
-    fi
-
-    echo -e "\n ================ \n ${Version} ${BlueBG} Guoba-Plugin 插件版本信息 ${Font} \n ================ \n"
-
-    git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
-fi
-
-set -e
-
-cd $WORK_DIR
+done
 
 echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n"
 
@@ -321,8 +79,6 @@ fi
 echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
 set +e
-# screen -dmSU yunzai node .
-# tail -f /dev/null
 node app
 EXIT_CODE=$?
 
