@@ -41,7 +41,7 @@ git log -1 --pretty=format:"%h - %an, %ar (%cd) : %s"
 PLUGINS=($(find /home -mindepth 1 -maxdepth 1 -type d))
 for PLUGIN in "${PLUGINS[@]}"; do
     cd "$PLUGIN";
-    PLUGIN_NAME = ${PWD##*/}
+    PLUGIN_NAME=${PWD##*/}
 
     if [ -d .git ]; then
         echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 $PLUGIN_NAME 更新 ${Font} \n ================ \n"
@@ -79,6 +79,7 @@ fi
 echo -e "\n ================ \n ${Info} ${GreenBG} 启动 TRSS-Yunzai ${Font} \n ================ \n"
 
 set +e
+cd "$WORK_DIR"
 node app
 EXIT_CODE=$?
 
