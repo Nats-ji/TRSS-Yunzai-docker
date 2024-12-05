@@ -91,8 +91,8 @@ done
 
 echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Yunzai 设置 ${Font} \n ================ \n"
 
-if [ -f "./config/config/redis.yaml" ]; then
-    sed -i 's/127.0.0.1/redis/g' ./config/config/redis.yaml
+if [ -f "/app/TRSS-Yunzai/config/config/redis.yaml" ]; then
+    sed -i 's/127.0.0.1/redis/g' /app/TRSS-Yunzai/config/config/redis.yaml
     echo -e "\n  修改Redis地址完成~  \n"
 fi
 
