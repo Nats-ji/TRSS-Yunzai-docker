@@ -13,6 +13,7 @@ ARG BUNDLE_POETRY true
 ARG USE_APT_MIRROR true
 ARG USE_NPM_MIRROR true
 ARG USE_PYPI_MIRROR true
+ARG INSTALL_GUOBA true
 ARG REPO_URL https://github.com/TimeRainStarSky/Yunzai.git
 ARG REPO_BRANCH main
 
@@ -82,12 +83,7 @@ RUN REPO_URL=${REPO_URL:-"https://github.com/TimeRainStarSky/Yunzai.git"} \
     && _NPM_MIRROR_FLAG="" \
     && if [ "$USE_NPM_MIRROR"x = "true"x ]; then _NPM_MIRROR_FLAG="--registry=https://registry.npmmirror.com"; fi \
     && git clone --depth=1 --branch $REPO_BRANCH $REPO_URL /app/TRSS-Yunzai \
-    && cd /app/TRSS-Yunzai \
-    && sed -i 's/127.0.0.1/redis/g' ./config/default_config/redis.yaml \
-    && git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin.git /app/TRSS-Yunzai/plugins/genshin \
-    && git clone --depth 1 https://github.com/yoimiya-kokomi/miao-plugin /app/TRSS-Yunzai/plugins/miao-plugin \
-    && git clone --depth 1 https://github.com/TimeRainStarSky/TRSS-Plugin /app/TRSS-Yunzai/plugins/TRSS-Plugin \
-    && pnpm install -P $_NPM_MIRROR_FLAG
+    && if [ "$INSTALL_GUOBA"x = "true"x ]; then touch ~/.INSTALL_GUOBA; fi
 
 COPY --from=resource /res/entrypoint.sh /app/TRSS-Yunzai/entrypoint.sh
 
