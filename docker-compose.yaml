@@ -13,7 +13,7 @@ services:
         INSTALL_GUOBA: 'true'                                            # 是否在构建时安装锅巴插件
     restart: always
     ports:
-      - "50831:50831"                                                    # 映射锅巴插件端口，格式"主机端口:容器内部端口"
+      - "2536:2536"                                                      # 映射锅巴插件端口，格式"主机端口:容器内部端口"
     volumes:
       - ./yunzai/config:/app/TRSS-Yunzai/config                          # Bot配置文件
       - ./yunzai/logs:/app/TRSS-Yunzai/logs                              # 日志文件
