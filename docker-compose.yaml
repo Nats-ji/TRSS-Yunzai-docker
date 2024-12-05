@@ -1,7 +1,7 @@
 version: "3"
 services:
   yunzai:
-    container_name: test-yunzai
+    container_name: miao-yunzai
     build:                                                               # 使用 Dockerfile 本地构建
       context: ./docker
       args:
@@ -27,7 +27,7 @@ services:
         condition: service_started
 
   redis:
-    container_name: test-redis
+    container_name: miao-redis
     image: redis:alpine
     restart: always
     volumes:
@@ -43,7 +43,7 @@ services:
       timeout: 1s
 
   lagrange:
-    container_name: test-lagrange
+    container_name: miao-lagrange
     image: ghcr.io/lagrangedev/lagrange.onebot:edge
     restart: always
     volumes:
