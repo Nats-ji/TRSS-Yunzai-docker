@@ -12,6 +12,7 @@ services:
         USE_PYPI_MIRROR: 'false'                                         # 是否在构建时使用 pypi 镜像
         INSTALL_GUOBA: 'true'                                            # 是否在构建时安装锅巴插件
     restart: always
+    hostname: miao-yunzai
     ports:
       - "2536:2536"                                                      # 映射锅巴插件端口，格式"主机端口:容器内部端口"
     volumes:
@@ -29,12 +30,13 @@ services:
   redis:
     container_name: miao-redis
     image: redis:alpine
+    hostname: miao-redis
     restart: always
     volumes:
       # 前往 https://download.redis.io/redis-stable/redis.conf 下载配置文件，放入 ./redis/config 文件夹中
       # - ./redis/config:/etc/redis/    # Redis配置文件
-      - ./redis/data:/data
-      - ./redis/logs:/logs
+      - ./yunzai/redis/data:/data
+      - ./yunzai/redis/logs:/logs
     # command: /etc/redis/redis.conf    # 取消注释以应用Redis配置文件
     healthcheck:
       test: [ "CMD", "redis-cli", "PING" ]
@@ -45,6 +47,7 @@ services:
   lagrange:
     container_name: miao-lagrange
     image: ghcr.io/lagrangedev/lagrange.onebot:edge
+    hostname: miao-lagrange
     restart: always
     volumes:
-      - ./lagrange:/app/data
+      - ./yunzai/lagrange:/app/data

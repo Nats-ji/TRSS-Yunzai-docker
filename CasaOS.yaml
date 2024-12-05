@@ -1,0 +1,102 @@
+name: yunzai
+services:
+    1-yunzai:
+        cpu_shares: 90
+        command: []
+        container_name: miao-yunzai
+        depends_on:
+            2-redis:
+                condition: service_healthy
+                required: true
+            3-lagrange:
+                condition: service_started
+                required: true
+        deploy:
+            resources:
+                limits:
+                    memory: "7938768896"
+        hostname: miao-yunzai
+        image: ghcr.io/nats-ji/trss-yunzai-docker:main
+        networks:
+            yunzai_default: null
+        ports:
+            - target: 2536
+              published: "2536"
+              protocol: tcp
+        restart: always
+        volumes:
+            - type: bind
+              source: /DATA/AppData/yunzai/config
+              target: /app/TRSS-Yunzai/config
+            - type: bind
+              source: /DATA/AppData/yunzai/logs
+              target: /app/TRSS-Yunzai/logs
+            - type: bind
+              source: /DATA/AppData/yunzai/data
+              target: /app/TRSS-Yunzai/data
+            - type: bind
+              source: /DATA/AppData/yunzai/temp
+              target: /app/TRSS-Yunzai/temp
+            - type: bind
+              source: /DATA/AppData/yunzai/plugins
+              target: /app/TRSS-Yunzai/plugins
+    2-redis:
+        cpu_shares: 90
+        command: []
+        container_name: miao-redis
+        deploy:
+            resources:
+                limits:
+                    memory: "7938768896"
+        hostname: miao-redis
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - PING
+            timeout: 1s
+            interval: 5s
+            start_period: 10s
+        image: redis:alpine
+        networks:
+            yunzai_default: null
+        restart: always
+        volumes:
+            - type: bind
+              source: /DATA/AppData/yunzai/redis/data
+              target: /data
+            - type: bind
+              source: /DATA/AppData/yunzai/redis/logs
+              target: /logs
+    3-lagrange:
+        cpu_shares: 90
+        command: []
+        container_name: miao-lagrange
+        deploy:
+            resources:
+                limits:
+                    memory: "7938768896"
+        hostname: miao-lagrange
+        image: ghcr.io/lagrangedev/lagrange.onebot:edge
+        networks:
+            yunzai_default: null
+        restart: always
+        volumes:
+            - type: bind
+              source: /DATA/AppData/yunzai/lagrange
+              target: /app/data
+networks:
+    default:
+        name: yunzai_default
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: "data:image/jpeg;base64,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"
+    index: /guoba
+    is_uncontrolled: false
+    port_map: "2536"
+    scheme: http
+    store_app_id: yunzai
+    title:
+        custom: Yunzai Bot
