@@ -83,6 +83,7 @@ RUN REPO_URL=${REPO_URL:-"https://github.com/TimeRainStarSky/Yunzai.git"} \
     && _NPM_MIRROR_FLAG="" \
     && if [ "$USE_NPM_MIRROR"x = "true"x ]; then _NPM_MIRROR_FLAG="--registry=https://registry.npmmirror.com"; fi \
     && git clone --depth=1 --branch $REPO_BRANCH $REPO_URL /app/TRSS-Yunzai \
+    && cd /app/TRSS-Yunzai \
     && pnpm i $_NPM_MIRROR_FLAG \
     && if [ "$INSTALL_GUOBA"x = "true"x ]; then touch ~/.INSTALL_GUOBA; fi
 
