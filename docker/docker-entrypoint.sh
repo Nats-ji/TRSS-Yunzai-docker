@@ -16,7 +16,7 @@ CONFIG_DIR="/app/TRSS-Yunzai/config"
 PLUGIN_DIR="/app/TRSS-Yunzai/plugins"
 
 # Check if config empty
-if [ "$(ls -A $CONFIG_DIR)" ]; then
+if [ ! "$(ls -A $CONFIG_DIR)" ]; then
     echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n" 
     git reset --hard
 
