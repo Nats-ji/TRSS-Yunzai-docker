@@ -62,7 +62,7 @@ for PLUGIN in "${PLUGINS[@]}"; do
     if [ -d .git ]; then
         echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 $PLUGIN_NAME 插件更新 ${Font} \n ================ \n"
 
-        if [[ -z $(git status -s) ]]; then
+        if [[ -n $(git status -s) ]]; then
             echo -e " ${Warn} ${YellowBG} 当前工作区有修改，尝试暂存后更新。${Font}"
             git add .
             git stash
@@ -78,7 +78,7 @@ for PLUGIN in "${PLUGINS[@]}"; do
             PKG_NAME=$(npm pkg get name)
 
             cd "$WORK_DIR"
-            yes | pnpm i --filter="$PKG_NAME"
+            yes | pnpm i --filter=$PKG_NAME
             cd "$PLUGIN"
             set +e
         fi
