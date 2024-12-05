@@ -78,6 +78,7 @@ for PLUGIN in "${PLUGINS[@]}"; do
             PKG_NAME=$(npm pkg get name)
 
             cd "$WORK_DIR"
+            echo $PKG_NAME
             yes | pnpm i --filter=$PKG_NAME
             cd "$PLUGIN"
             set +e
