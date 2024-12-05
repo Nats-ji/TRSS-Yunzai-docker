@@ -75,10 +75,9 @@ for PLUGIN in "${PLUGINS[@]}"; do
         if [ -f "./package.json" ]; then
             set -e
             echo -e "\n ================ \n ${Info} ${GreenBG} 更新 $PLUGIN_NAME 插件运行依赖 ${Font} \n ================ \n"
-            PKG_NAME=$(npm pkg get name)
+            PKG_NAME=$(npm pkg get name | sed 's/"//g')
 
             cd "$WORK_DIR"
-            echo $PKG_NAME
             yes | pnpm i --filter=$PKG_NAME
             cd "$PLUGIN"
             set +e
