@@ -12,7 +12,23 @@ Info="${GreenBG}[信息]${Font}"
 Warn="${YellowBG}[提示]${Font}"
 
 WORK_DIR="/app/TRSS-Yunzai"
+CONFIG_DIR="/app/TRSS-Yunzai/config"
 PLUGIN_DIR="/app/TRSS-Yunzai/plugins"
+
+# Check if config empty
+if [ "$(ls -A $CONFIG_DIR)" ]; then
+    echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n" 
+    git reset --hard
+
+    # Clone plugins
+    git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin.git /app/TRSS-Yunzai/plugins/genshin
+    git clone --depth=1 https://github.com/yoimiya-kokomi/miao-plugin /app/TRSS-Yunzai/plugins/miao-plugin
+    git clone --depth=1 https://github.com/TimeRainStarSky/TRSS-Plugin /app/TRSS-Yunzai/plugins/TRSS-Plugin
+
+    if [ -f "~/.INSTALL_GUOBA" ]; then
+        git clone --depth=1 https://github.com/guoba-yunzai/guoba-plugin.git /app/TRSS-Yunzai/plugins/Guoba-Plugin/
+    fi
+fi
 
 echo -e "\n ================ \n ${Info} ${GreenBG} 拉取 TRSS-Yunzai 更新 ${Font} \n ================ \n"
 
@@ -56,12 +72,16 @@ for PLUGIN in "${PLUGINS[@]}"; do
             git pull --allow-unrelated-histories
         fi
 
-        set -e
-        echo -e "\n ================ \n ${Info} ${GreenBG} 更新 $PLUGIN_NAME 运行依赖 ${Font} \n ================ \n"
-        cd "$WORK_DIR"
-        yes | pnpm i --filter=$PLUGIN_NAME
-        cd "$PLUGIN"
-        set +e
+        if [ -f "./package.json" ]
+            set -e
+            echo -e "\n ================ \n ${Info} ${GreenBG} 更新 $PLUGIN_NAME 运行依赖 ${Font} \n ================ \n"
+            PKG_NAME=$(npm pkg get name)
+
+            cd "$WORK_DIR"
+            yes | pnpm i --filter=$PKG_NAME
+            cd "$PLUGIN"
+            set +e
+        fi
 
         echo -e "\n ================ \n ${Version} ${BlueBG} $PLUGIN_NAME 版本信息 ${Font} \n ================ \n"
 
@@ -69,7 +89,7 @@ for PLUGIN in "${PLUGINS[@]}"; do
     fi
 done
 
-echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 Docker 环境 ${Font} \n ================ \n"
+echo -e "\n ================ \n ${Info} ${GreenBG} 初始化 TRSS-Yunzai 设置 ${Font} \n ================ \n"
 
 if [ -f "./config/config/redis.yaml" ]; then
     sed -i 's/127.0.0.1/redis/g' ./config/config/redis.yaml
