@@ -44,10 +44,10 @@ sudo vim ./lagrange/appsettings.json
         {
             "Type": "ReverseWebSocket",
 --          "Host": "127.0.0.1",
-++          "Host": "yunzai",
 --          "Port": 8080,
-++          "Port": 2536,
 --          "Suffix": "/onebot/v11/ws",
+++          "Host": "yunzai",
+++          "Port": 2536,
 ++          "Suffix": "/OneBotv11",
             "ReconnectInterval": 5000,
             "HeartBeatInterval": 5000,
