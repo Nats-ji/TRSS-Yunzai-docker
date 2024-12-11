@@ -1,7 +1,7 @@
 version: "3"
 services:
   yunzai:
-    container_name: miao-yunzai
+    container_name: yunzai
     build:                                                               # 使用 Dockerfile 本地构建
       context: ./docker
       args:
@@ -12,7 +12,7 @@ services:
         USE_PYPI_MIRROR: 'false'                                         # 是否在构建时使用 pypi 镜像
         INSTALL_GUOBA: 'true'                                            # 是否在构建时安装锅巴插件
     restart: always
-    hostname: miao-yunzai
+    hostname: yunzai
     ports:
       - "2536:2536"                                                      # 映射锅巴插件端口，格式"主机端口:容器内部端口"
     volumes:

@@ -46,7 +46,7 @@ sudo vim ./yunzai/lagrange/appsettings.json
 --          "Host": "127.0.0.1",
 --          "Port": 8080,
 --          "Suffix": "/onebot/v11/ws",
-++          "Host": "miao-yunzai",
+++          "Host": "yunzai",
 ++          "Port": 2536,
 ++          "Suffix": "/OneBotv11",
             "ReconnectInterval": 5000,
