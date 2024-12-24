@@ -84,4 +84,4 @@ ls
 
 ## Use with CasaOS
 
-import [CasaOS.yaml](./CasaOS.yaml)
+https://github.com/Nats-ji/casaos-rpi-apps-repo/tree/main
