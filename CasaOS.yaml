@@ -43,12 +43,12 @@ services:
     redis:
         cpu_shares: 90
         command: []
-        container_name: miao-redis
+        container_name: yunzai-redis
         deploy:
             resources:
                 limits:
                     memory: "7938768896"
-        hostname: miao-redis
+        hostname: yunzai-redis
         healthcheck:
             test:
                 - CMD
@@ -71,12 +71,12 @@ services:
     lagrange:
         cpu_shares: 90
         command: []
-        container_name: miao-lagrange
+        container_name: yunzai-lagrange
         deploy:
             resources:
                 limits:
                     memory: "7938768896"
-        hostname: miao-lagrange
+        hostname: yunzai-lagrange
         image: ghcr.io/lagrangedev/lagrange.onebot:edge
         networks:
             yunzai: null

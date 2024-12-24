@@ -28,9 +28,9 @@ services:
         condition: service_started
 
   redis:
-    container_name: miao-redis
+    container_name: yunzai-redis
     image: redis:alpine
-    hostname: miao-redis
+    hostname: yunzai-redis
     restart: always
     volumes:
       # 前往 https://download.redis.io/redis-stable/redis.conf 下载配置文件，放入 ./redis/config 文件夹中
@@ -45,9 +45,9 @@ services:
       timeout: 1s
 
   lagrange:
-    container_name: miao-lagrange
+    container_name: yunzai-lagrange
     image: ghcr.io/lagrangedev/lagrange.onebot:edge
-    hostname: miao-lagrange
+    hostname: yunzai-lagrange
     restart: always
     volumes:
       - ./yunzai/lagrange:/app/data
