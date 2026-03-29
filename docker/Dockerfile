@@ -6,7 +6,7 @@ RUN dos2unix /res/entrypoint.sh \
     && chmod +x /res/entrypoint.sh
 
 
-FROM node:slim AS runtime
+FROM node:trixie-slim AS runtime
 
 ARG BUNDLE_FFMPEG true
 ARG BUNDLE_POETRY true
