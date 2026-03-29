@@ -6,7 +6,7 @@ RUN dos2unix /res/entrypoint.sh \
     && chmod +x /res/entrypoint.sh
 
 
-FROM node:21-bullseye-slim AS runtime
+FROM node:slim AS runtime
 
 ARG BUNDLE_FFMPEG true
 ARG BUNDLE_POETRY true
